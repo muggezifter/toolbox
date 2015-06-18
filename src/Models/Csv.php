@@ -26,17 +26,19 @@ Class Csv
 
     public function read($filename)
     {
-        if (!(is_file($filename) && is_readable($filename))) {
+        if (! is_file($filename) || ! is_readable($filename)) {
             throw new Exception('no such file');
         }
 
-        $content = file_get_contents($filename);
-        $lines = explode(PHP_EOL, $content);
+        $s = $this->separator;
 
-        foreach ($lines as $line) {
-            $this->data[] = str_getcsv($line,$this->separator);
-        }
-
+        $this->data = array_map(
+            function ($value) use ($s)
+            {
+                return str_getcsv($value,$s);
+            },
+            file($filename)
+        );
 
         if ($this->debug) {
             var_dump($this->data);

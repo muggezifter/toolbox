@@ -5,6 +5,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use Toolbox\Models\Csv;
 use Exception;
 
@@ -29,6 +30,12 @@ class CsvShowCommand extends Command
                'Which character is used to separate values in the csv file?'
             )
             ->addOption(
+               'headers',
+               null,
+               InputOption::VALUE_NONE,
+               'First row has headers'
+            )
+            ->addOption(
                'debug',
                null,
                InputOption::VALUE_NONE,
@@ -49,22 +56,27 @@ class CsvShowCommand extends Command
             $this->csv->debug = true;
         }
 
+        if ($input->getOption('headers')) {
+            $this->csv->headers = true;
+        }
+
 
         $filename = $input->getArgument('filename');
-        if ($filename) {
-            try 
-            {
+        try {
             $this->csv->read($filename);
-            } 
-            catch (Exception $e) {
-                $output->writeln($e->getMessage());
-                exit;
-            }
-            $text = 'filename: '.$filename;
         } 
+        catch (Exception $e) {
+            $output->writeln("ERROR:" . $e->getMessage());
+            exit;
+        }
+        $table = new Table($output);
+        if ($this->csv->headers) {
+            $table->setHeaders($this->csv->getTableHeader());
+        }
+        $table->setRows($this->csv->getTableBody());
 
-      
+        $table->render();
 
-        $output->writeln($text);
+
     }
 }

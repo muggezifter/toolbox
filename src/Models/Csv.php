@@ -5,8 +5,9 @@ use Exception;
 Class Csv 
 {
 	private $separator = ",";
-	private $data;
-	public $debug = true;
+	private $data = [];
+	public $debug = false;
+	public $headers = false;
 
 	public function setSeparator($separator){
 		// TODO: some validation code here
@@ -27,12 +28,18 @@ Class Csv
 		if (!(is_file($filename) && is_readable($filename))) {
 			throw new Exception('no such file');
 		}
-
-		$this->data = str_getcsv(file_get_contents($filename));
 		
+		$content = file_get_contents($filename);
+		$lines = explode(PHP_EOL, $content);
+		foreach ($lines as $line) {
+    		$this->data[] = str_getcsv($line,$this->separator);
+		}
+
+
 		if ($this->debug) {
 			var_dump($this->data);
 		}
+
 		$this->validate($this->data);
 	}
 
@@ -47,4 +54,14 @@ Class Csv
 		}
 	}
 
+	public function getTableHeader()
+	{
+		return($this->data[0]);
+	}
+
+	public function getTableBody()
+	{
+		return array_slice($this->data,$this->headers? 1:0);
+	   	
+	}
 }

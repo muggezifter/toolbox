@@ -12,11 +12,8 @@ This will install the dependencies and configure autoload.
 php toolbox csv:show filename.csv : Print the contents of filename.csv to the console in tabular from
 
 options:
+* --headers: first row has column headers
+* --separator=[separator]: use this separator (use *p* or *pipe* for |)
 * --debug: show debug information
-* --separator=<separator> : use this separator
 
-### Todo ###
 
-* ~~Write documentation~~
-* Write the code
-* Write some tests

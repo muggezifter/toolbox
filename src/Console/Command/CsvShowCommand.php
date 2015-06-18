@@ -5,7 +5,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
 use Toolbox\Models\Csv;
 use Exception;
 
@@ -24,22 +23,22 @@ class CsvShowCommand extends Command
                 'Which file do you want to show?'
             )
             ->addOption(
-               'separator',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Which character is used to separate values in the csv file?'
+                'separator',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Which character is used to separate values in the csv file?'
             )
             ->addOption(
-               'headers',
-               null,
-               InputOption::VALUE_NONE,
-               'First row has headers'
+                'headers',
+                null,
+                InputOption::VALUE_NONE,
+                'First row has headers'
             )
             ->addOption(
-               'debug',
-               null,
-               InputOption::VALUE_NONE,
-               'Show debug information'
+                'debug',
+                null,
+                InputOption::VALUE_NONE,
+                'Show debug information'
             )
         ;
     }
@@ -60,22 +59,15 @@ class CsvShowCommand extends Command
             $this->csv->headers = true;
         }
 
-
         $filename = $input->getArgument('filename');
+
         try {
             $this->csv->read($filename);
-        } 
-        catch (Exception $e) {
-            $output->writeln("ERROR:" . $e->getMessage());
+            $this->csv->writeAsTable($output);
+        } catch (Exception $e) {
+            $output->writeln("<error> ERROR: " . $e->getMessage() . " </error>");
             exit;
         }
-        $table = new Table($output);
-        if ($this->csv->headers) {
-            $table->setHeaders($this->csv->getTableHeader());
-        }
-        $table->setRows($this->csv->getTableBody());
-
-        $table->render();
 
 
     }

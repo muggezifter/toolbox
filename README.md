@@ -9,8 +9,11 @@ This will install the dependencies and configure autoload.
 
 ### Usage ###
 
-* php toolbox csv:show filename.csv : Print the contents of filename.csv to the console in tabular from
-* php toolbox --help : Show available commands
+php toolbox csv:show filename.csv : Print the contents of filename.csv to the console in tabular from
+
+options:
+* --debug: show debug information
+* --separator=<separator> : use this separator
 
 ### Todo ###
 

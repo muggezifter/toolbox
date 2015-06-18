@@ -5,40 +5,65 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Toolbox\Models\Csv;
+use Exception;
 
 class CsvShowCommand extends Command
 {
+    private $csv;
+
     protected function configure()
     {
         $this
             ->setName('csv:show')
-            ->setDescription('Greet someone')
+            ->setDescription('Show formatted content of csv file')
             ->addArgument(
-                'name',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                'filename',
+                InputArgument::REQUIRED,
+                'Which file do you want to show?'
             )
             ->addOption(
-               'yell',
+               'separator',
+               null,
+               InputOption::VALUE_REQUIRED,
+               'Which character is used to separate values in the csv file?'
+            )
+            ->addOption(
+               'debug',
                null,
                InputOption::VALUE_NONE,
-               'If set, the task will yell in uppercase letters'
+               'Show debug information'
             )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
-        if ($name) {
-            $text = 'Hello '.$name;
-        } else {
-            $text = 'Hello';
+        $this->csv = new Csv;
+
+        if ($separator = $input->getOption('separator')) {
+            $this->csv->setSeparator($separator);
         }
 
-        if ($input->getOption('yell')) {
-            $text = strtoupper($text);
+        if ($input->getOption('debug')) {
+            $this->csv->debug = true;
         }
+
+
+        $filename = $input->getArgument('filename');
+        if ($filename) {
+            try 
+            {
+            $this->csv->read($filename);
+            } 
+            catch (Exception $e) {
+                $output->writeln($e->getMessage());
+                exit;
+            }
+            $text = 'filename: '.$filename;
+        } 
+
+      
 
         $output->writeln($text);
     }

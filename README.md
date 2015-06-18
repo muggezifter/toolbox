@@ -13,7 +13,9 @@ php toolbox csv:show filename.csv : Print the contents of filename.csv to the co
 
 options:
 * --headers: first row has column headers
+
 * --separator=[separator]: use this separator (use *p* or *pipe* for |)
+
 * --debug: show debug information
 
 

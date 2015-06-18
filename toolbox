@@ -2,9 +2,11 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use Toolbox\Console\Command\CsvShowCommand;
+use Toolbox\Console\Command\CsvTableCommand;
+use Toolbox\Console\Command\CsvJsonCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
-$application->add(new CsvShowCommand());
+$application->add(new CsvTableCommand());
+$application->add(new CsvJsonCommand());
 $application->run();

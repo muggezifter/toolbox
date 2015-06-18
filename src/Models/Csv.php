@@ -70,4 +70,9 @@ Class Csv
         $table->render();
     }
 
+    public function writeAsJson($output)
+    {
+        $output->writeln(json_encode($this->data));
+    }
+
 }

@@ -39,8 +39,7 @@ class CsvShowCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Show debug information'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

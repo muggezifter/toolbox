@@ -68,13 +68,4 @@ Class Csv
         $table->render();
     }
 
-//    public function getTableHeader()
-//    {
-//        return($this->data[0]);
-//    }
-//
-//    public function getTableBody()
-//    {
-//        return array_slice($this->data,$this->headers? 1:0);
-//    }
 }

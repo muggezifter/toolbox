@@ -1,7 +1,3 @@
-# TOOLBOX #
-
-A first attempt at writing a console utility in PHP using the Symfony2 Console component. 
-
 ### Installation ###
 
 Clone the repository, then run composer update. 
@@ -9,22 +5,15 @@ This will install the dependencies and configure autoload.
 
 ### Usage ###
 
-php toolbox csv:table filename.csv [--options]: Print the contents of filename.csv to the console as a table
+``` php toolbox csv:table filename.csv [--options] ``` print the contents of *filename.csv* to the console as a table.    
 
-options:
+options:   
+``` --headers ``` first row has column headers  
+``` --separator=[separator] ``` use this separator (use *p* or *pipe* for |)  
+``` --debug ``` show debug information
 
-* --headers: first row has column headers
+``` php toolbox csv:json fil:ename.csv [--options] ``` print the contents of *filename.csv* to the console as JSON.    
 
-* --separator=[separator]: use this separator (use *p* or *pipe* for |)
-
-* --debug: show debug information
-
-php toolbox csv:json filename.csv [--options]: Print the contents of filename.csv to the console as JSON
-
-options:
-
-* --separator=[separator]: use this separator (use *p* or *pipe* for |)
-
-* --debug: show debug information
-
-
+options:      
+``` --:separator=[separator] ``` use this separator (use *p* or *pipe*: for |)  
+``` --debug ``` show debug information

@@ -1,6 +1,6 @@
 ### Installation ###
 
-Clone the repository, then run composer update. 
+Clone the repository, then run composer update.
 This will install the dependencies and configure autoload.
 
 ### Usage ###

@@ -12,8 +12,8 @@ options:
 ``` --separator=[separator] ``` use this separator (use *p* or *pipe* for |)  
 ``` --debug ``` show debug information
 
-``` php toolbox csv:json fil:ename.csv [--options] ``` print the contents of *filename.csv* to the console as JSON.    
+``` php toolbox csv:json filename.csv [--options] ``` print the contents of *filename.csv* to the console as JSON.
 
 options:      
-``` --:separator=[separator] ``` use this separator (use *p* or *pipe*: for |)  
+``` --separator=[separator] ``` use this separator (use *p* or *pipe*: for |)
 ``` --debug ``` show debug information

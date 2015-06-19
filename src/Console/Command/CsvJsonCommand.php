@@ -8,8 +8,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Toolbox\Models\Csv;
 use Exception;
 
+/**
+ * Class CsvJsonCommand
+ * @package Toolbox\Console\Command
+ */
 class CsvJsonCommand extends Command
 {
+    // This will hold a Csv object:
     private $csv;
 
     protected function configure()
@@ -36,18 +41,18 @@ class CsvJsonCommand extends Command
             );
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->csv = new Csv;
 
-        if ($separator = $input->getOption('separator')) {
-            $this->csv->setSeparator($separator);
-        }
+        $this->csv->setSeparator($input->getOption('separator'));
 
-        if ($input->getOption('debug')) {
-            $this->csv->debug = true;
-        }
-
+        $this->csv->debug = $input->getOption('debug');
 
         $filename = $input->getArgument('filename');
 

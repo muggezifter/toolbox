@@ -1,6 +1,3 @@
-### Branch: Alternative ###
-This is the "functional" version, where I avoid storing state as much as possible.
-
 ### Installation ###
 
 Clone the repository, then run composer update.  

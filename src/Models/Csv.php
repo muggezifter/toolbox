@@ -9,66 +9,50 @@ use Exception;
  */
 Class Csv
 {
-    // this wil hold a two dimensional array representing the content of the file:
-    private $data = [[]];
-    // these will hold the values set by the options:
-    private $separator = ",";
-    public $debug = false;
-    public $headers = false;
 
     /**
-     * For this option we use a setter because we need to do some processing on the value;
-     * for the other options that would be unnecessary overhead.
-     *
      * @param $separator
+     * @return string
      */
-    public function setSeparator($separator){
-        // TODO: some validation code here
+    public function separator($separator){
         switch ($separator)
         {
             case null:
-                $this->separator=",";
-                break;
+                return ",";
             case "p":
             case "pipe":
-                $this->separator="|";
-                break;
+                return "|";
             default:
-                $this->separator = $separator;
+                return $separator;
         }
     }
 
     /**
      * @param $filename
+     * @return array
      * @throws Exception
      */
-    public function read($filename)
+    public function read($filename,$separator)
     {
         if (! is_file($filename) || ! is_readable($filename)) {
             throw new Exception('no such file');
         }
 
-        // We need to do this because we need the value in the closure:
-        $s = $this->separator;
-
-        $this->data = array_map(
-            function ($value) use ($s)
+        $data = array_map(
+            function ($value) use ($separator)
             {
-                return str_getcsv($value,$s);
+                return str_getcsv($value,$separator);
             },
             file($filename)
         );
-
-        if ($this->debug) {
-            var_dump($this);
-        }
-
-        $this->validate($this->data);
+        return $this->validate($data);
     }
+
 
 
     /**
      * @param $data
+     * @return mixed
      * @throws Exception
      */
     private function validate($data)
@@ -79,29 +63,34 @@ Class Csv
         if (count($data[0])<2) {
             throw new Exception('file must have at least two columns');
         }
+        return $data;
     }
 
+
     /**
+     * @param $data
+     * @param $headers
      * @param $output
      */
-    public function writeAsTable($output)
+    public function writeAsTable($data,$headers,$output)
     {
         $table = new Table($output);
 
-        if ($this->headers) {
-            $table->setHeaders($this->data[0]);
+        if ($headers) {
+            $table->setHeaders($data[0]);
         }
-        $table->setRows(array_slice($this->data,$this->headers? 1:0));
+        $table->setRows(array_slice($data,$this->headers? 1:0));
 
         $table->render();
     }
 
     /**
+     * @param $data
      * @param $output
      */
-    public function writeAsJson($output)
+    public function writeAsJson($data,$output)
     {
-        $output->writeln(json_encode($this->data));
+        $output->writeln(json_encode($data));
     }
 
 }

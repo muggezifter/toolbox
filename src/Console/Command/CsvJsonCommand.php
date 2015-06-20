@@ -14,8 +14,6 @@ use Exception;
  */
 class CsvJsonCommand extends Command
 {
-    // This will hold a Csv object:
-    private $csv;
 
     protected function configure()
     {
@@ -32,12 +30,6 @@ class CsvJsonCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Which character is used to separate values in the csv file?'
-            )
-            ->addOption(
-                'debug',
-                null,
-                InputOption::VALUE_NONE,
-                'Show debug information'
             );
     }
 
@@ -48,22 +40,19 @@ class CsvJsonCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->csv = new Csv;
-
-        $this->csv->setSeparator($input->getOption('separator'));
-
-        $this->csv->debug = $input->getOption('debug');
-
-        $filename = $input->getArgument('filename');
+        $csv = new Csv;
 
         try {
-            $this->csv->read($filename);
-            $this->csv->writeAsJson($output);
+            $csv->writeAsJson(
+                $csv->read(
+                    $input->getArgument('filename'),
+                    $csv->separator($input->getOption('separator'))
+                ),
+                $output
+            );
         } catch (Exception $e) {
             $output->writeln("<error> ERROR: " . $e->getMessage() . " </error>");
             exit;
         }
-
-
     }
 }

@@ -14,8 +14,6 @@ use Exception;
  */
 class CsvTableCommand extends Command
 {
-    // This will hold a Csv object:
-    private $csv;
 
     protected function configure()
     {
@@ -38,12 +36,6 @@ class CsvTableCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'First row has headers'
-            )
-            ->addOption(
-                'debug',
-                null,
-                InputOption::VALUE_NONE,
-                'Show debug information'
             );
     }
 
@@ -54,19 +46,17 @@ class CsvTableCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->csv = new Csv;
-
-        $this->csv->setSeparator($input->getOption('separator'));
-
-        $this->csv->debug = $input->getOption('debug');
-
-        $this->csv->headers = $input->getOption('headers');
-
-        $filename = $input->getArgument('filename');
+        $csv = new Csv;
 
         try {
-            $this->csv->read($filename);
-            $this->csv->writeAsTable($output);
+            $csv->writeAsTable(
+                $csv->read(
+                    $input->getArgument('filename'),
+                    $csv->separator($input->getOption('separator'))
+                ),
+                $input->getOption('headers'),
+                $output
+            );
         } catch (Exception $e) {
             $output->writeln("<error> ERROR: " . $e->getMessage() . " </error>");
             exit;

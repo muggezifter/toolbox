@@ -68,29 +68,35 @@ Class Csv
 
 
     /**
-     * @param $data
+     * @param $filename
+     * @param $separator
      * @param $headers
      * @param $output
+     * @throws Exception
      */
-    public function writeAsTable($data,$headers,$output)
+    public function writeAsTable($filename,$separator,$headers,$output)
     {
         $table = new Table($output);
+
+        $data = $this->read($filename,$separator);
 
         if ($headers) {
             $table->setHeaders($data[0]);
         }
-        $table->setRows(array_slice($data,$this->headers? 1:0));
+        $table->setRows(array_slice($data,$headers? 1:0));
 
         $table->render();
     }
 
     /**
-     * @param $data
+     * @param $filename
+     * @param $separator
      * @param $output
+     * @throws Exception
      */
-    public function writeAsJson($data,$output)
+    public function writeAsJson($filename,$separator,$output)
     {
-        $output->writeln(json_encode($data));
+        $output->writeln(json_encode($this->read($filename,$separator)));
     }
 
 }

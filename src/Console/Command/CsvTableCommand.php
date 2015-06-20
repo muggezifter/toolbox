@@ -50,10 +50,8 @@ class CsvTableCommand extends Command
 
         try {
             $csv->writeAsTable(
-                $csv->read(
-                    $input->getArgument('filename'),
-                    $csv->separator($input->getOption('separator'))
-                ),
+                $input->getArgument('filename'),
+                $csv->separator($input->getOption('separator')),
                 $input->getOption('headers'),
                 $output
             );

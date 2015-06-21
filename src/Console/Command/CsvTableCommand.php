@@ -51,7 +51,7 @@ class CsvTableCommand extends Command
         try {
             $csv->writeAsTable(
                 $input->getArgument('filename'),
-                $csv->separator($input->getOption('separator')),
+                $input->getOption('separator'),
                 $input->getOption('headers'),
                 $output
             );

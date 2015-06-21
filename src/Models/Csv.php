@@ -14,7 +14,7 @@ Class Csv
      * @param $separator
      * @return string
      */
-    public function separator($separator){
+    private function separator($separator){
         switch ($separator)
         {
             case null:
@@ -29,7 +29,8 @@ Class Csv
 
     /**
      * @param $filename
-     * @return array
+     * @param $separator
+     * @return mixed
      * @throws Exception
      */
     private function read($filename,$separator)
@@ -78,7 +79,7 @@ Class Csv
     {
         $table = new Table($output);
 
-        $data = $this->read($filename,$separator);
+        $data = $this->read($filename,$this->separator($separator));
 
         if ($headers) {
             $table->setHeaders($data[0]);
@@ -96,7 +97,7 @@ Class Csv
      */
     public function writeAsJson($filename,$separator,$output)
     {
-        $output->writeln(json_encode($this->read($filename,$separator)));
+        $output->writeln(json_encode($this->read($filename,$this->separator($separator))));
     }
 
 }

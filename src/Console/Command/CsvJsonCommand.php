@@ -45,7 +45,7 @@ class CsvJsonCommand extends Command
         try {
             $csv->writeAsJson(
                 $input->getArgument('filename'),
-                $csv->separator($input->getOption('separator')),
+                $input->getOption('separator'),
                 $output
             );
         } catch (Exception $e) {

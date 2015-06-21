@@ -32,7 +32,7 @@ Class Csv
      * @return array
      * @throws Exception
      */
-    public function read($filename,$separator)
+    private function read($filename,$separator)
     {
         if (! is_file($filename) || ! is_readable($filename)) {
             throw new Exception('no such file');

@@ -64,7 +64,5 @@ class CsvTableCommand extends Command
             $output->writeln("<error> ERROR: " . $e->getMessage() . " </error>");
             exit;
         }
-
-
     }
 }

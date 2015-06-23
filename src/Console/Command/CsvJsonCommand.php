@@ -36,7 +36,7 @@ class CsvJsonCommand extends Command
                 ","
             );
     }
-    
+
 
     /**
      * @param InputInterface $input
@@ -55,7 +55,6 @@ class CsvJsonCommand extends Command
             );
         } catch (Exception $e) {
             $output->writeln("<error> ERROR: " . $e->getMessage() . " </error>");
-            exit;
         }
     }
 }

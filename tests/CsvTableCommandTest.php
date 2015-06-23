@@ -1,11 +1,11 @@
 <?php
 
-use Toolbox\Console\Command\CsvJsonCommand;
+use Toolbox\Console\Command\CsvTableCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 
-class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
+class CsvTableCommandTest extends PHPUnit_Framework_TestCase
 {
     private $command;
     private $commandTester;
@@ -14,8 +14,8 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
     public function setup()
     {
         $application = new Application();
-        $application->add(new CsvJsonCommand());
-        $this->command = $application->find('csv:json');
+        $application->add(new CsvTableCommand());
+        $this->command = $application->find('csv:table');
         $this->commandTester = new CommandTester($this->command);
     }
 
@@ -36,7 +36,7 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
             'command'      => $this->command->getName(),
             'filename'     => 'test1.csv',
         ));
-        $regexp = '/\[\["aap","noot",""\],\["mies","wim",""\],\["zus","jet",""\]\]/';
+        $regexp = '/| aap | noot | |/';
         $this->assertRegExp($regexp, $this->commandTester->getDisplay());
     }
 
@@ -51,6 +51,7 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
         $this->assertRegExp($regexp, $this->commandTester->getDisplay());
     }
 
+
     public function testTestfileWithCorrectSeparatorIsProcessedCorrectly()
     {
         $this->commandTester->execute(array(
@@ -58,7 +59,7 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
             'filename'     => 'test2.csv',
             '--separator'  => "p",
         ));
-        $regexp = '/\[\["aap","noot","2"\],\["mies","wim","3"\],\["zus","jet","4"\]\]/';
+        $regexp = '/ aap  | noot | 2 |/';
         $this->assertRegExp($regexp, $this->commandTester->getDisplay());
     }
 

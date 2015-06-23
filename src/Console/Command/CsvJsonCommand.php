@@ -10,6 +10,9 @@ use Exception;
 
 /**
  * Class CsvJsonCommand
+ *
+ * This command reads in a csv and outputs its JSON representation
+ *
  * @package Toolbox\Console\Command
  */
 class CsvJsonCommand extends Command
@@ -23,15 +26,17 @@ class CsvJsonCommand extends Command
             ->addArgument(
                 'filename',
                 InputArgument::REQUIRED,
-                'Which file do you want to show?'
+                'Specify the name of the file you want to show'
             )
             ->addOption(
                 'separator',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Which character is used to separate values in the csv file?'
+                'Specify the character that is used to separate values in the csv file',
+                ","
             );
     }
+    
 
     /**
      * @param InputInterface $input

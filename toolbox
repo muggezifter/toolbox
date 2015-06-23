@@ -1,4 +1,7 @@
 <?php
+/* this is the main application file
+ * usage:php toolbox csv:[table|json] <filename> [options]
+ */
 
 require __DIR__.'/vendor/autoload.php';
 

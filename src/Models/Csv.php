@@ -5,6 +5,9 @@ use Exception;
 
 /**
  * Class Csv
+ *
+ * This class holds functionality for toolbox commands in the csv: namespace
+ *
  * @package Toolbox\Models
  */
 Class Csv
@@ -17,8 +20,6 @@ Class Csv
     private function separator($separator){
         switch ($separator)
         {
-            case null:
-                return ",";
             case "p":
             case "pipe":
                 return "|";
@@ -33,7 +34,7 @@ Class Csv
      * @return mixed
      * @throws Exception
      */
-    private function read($filename,$separator)
+    private function read($filename,$separator,$output)
     {
         if (! is_file($filename) || ! is_readable($filename)) {
             throw new Exception('no such file');
@@ -46,18 +47,23 @@ Class Csv
             },
             file($filename)
         );
-        return $this->validate($data);
-    }
 
+        return $this->validate($data,$output);
+    }
 
 
     /**
      * @param $data
+     * @param $output
      * @return mixed
      * @throws Exception
      */
-    private function validate($data)
+    private function validate($data,$output)
     {
+        // debug info (-vvv option)
+        if ($output->isVerbose()) {
+            var_dump($data);
+        }
         if (count($data)<2) {
             throw new Exception('file must have at least two rows');
         }
@@ -79,7 +85,7 @@ Class Csv
     {
         $table = new Table($output);
 
-        $data = $this->read($filename,$this->separator($separator));
+        $data = $this->read($filename,$this->separator($separator),$output);
 
         if ($headers) {
             $table->setHeaders($data[0]);
@@ -89,6 +95,7 @@ Class Csv
         $table->render();
     }
 
+
     /**
      * @param $filename
      * @param $separator
@@ -97,7 +104,13 @@ Class Csv
      */
     public function writeAsJson($filename,$separator,$output)
     {
-        $output->writeln(json_encode($this->read($filename,$this->separator($separator))));
+        $output->writeln(
+            json_encode(
+                $this->read(
+                    $filename,
+                    $this->separator($separator),
+                    $output
+                )));
     }
 
 }

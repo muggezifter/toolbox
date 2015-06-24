@@ -36,8 +36,8 @@ class CsvTableCommandTest extends PHPUnit_Framework_TestCase
             'command'      => $this->command->getName(),
             'filename'     => 'test1.csv',
         ));
-        $regexp = '/| aap | noot | |/';
-        $this->assertRegExp($regexp, $this->commandTester->getDisplay());
+        $substring = "| aap  | noot |  |\n| mies | wim  |  |";
+        $this->assertContains($substring, $this->commandTester->getDisplay());
     }
 
     public function testTestfileWithWrongSeparatorGivesError()
@@ -59,8 +59,19 @@ class CsvTableCommandTest extends PHPUnit_Framework_TestCase
             'filename'     => 'test2.csv',
             '--separator'  => "p",
         ));
-        $regexp = '/ aap  | noot | 2 |/';
-        $this->assertRegExp($regexp, $this->commandTester->getDisplay());
+        $substring = "| aap  | noot | 2 |\n| mies | wim  | 3 |";
+        $this->assertContains($substring, $this->commandTester->getDisplay());
+    }
+
+    public function testHeaderOptionWorksCorrectly() {
+        $this->commandTester->execute(array(
+            'command'      => $this->command->getName(),
+            'filename'     => 'test2.csv',
+            '--separator'  => "p",
+            '--headers'    => null,
+        ));
+        $substring = "| aap  | noot | 2 |\n+------+------+---+";
+        $this->assertContains($substring, $this->commandTester->getDisplay());
     }
 
 

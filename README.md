@@ -20,4 +20,4 @@ options:
 
 ### Testing ###
 
-```vendor/bin/phpunit tests```  
+```vendor/bin/phpunit tests```

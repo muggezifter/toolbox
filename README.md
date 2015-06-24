@@ -17,3 +17,7 @@ options:
 options:      
 ``` --separator=[separator] ``` use this separator (use *p* or *pipe* for "|")  
 ``` --vvv``` show debug information
+
+### Testing ###
+
+```vendor/bin/phpunit tests```  

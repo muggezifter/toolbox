@@ -35,7 +35,7 @@ Class Csv
      *
      * @param String $filename
      * @param String $separator
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return mixed
      * @throws Exception
      */
@@ -61,7 +61,7 @@ Class Csv
      * Checks if the data has the minimum required number of columns and rows.
      *
      * @param Array $data
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return mixed
      * @throws Exception
      */
@@ -87,7 +87,7 @@ Class Csv
      * @param String $filename
      * @param String $separator
      * @param Boolean $headers
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @throws Exception
      */
     public function writeAsTable($filename,$separator,$headers,$output)
@@ -110,7 +110,7 @@ Class Csv
      *
      * @param String $filename
      * @param String $separator
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @throws Exception
      */
     public function writeAsJson($filename,$separator,$output)

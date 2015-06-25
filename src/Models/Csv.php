@@ -8,6 +8,7 @@ use Exception;
  *
  * Class Csv
  * @package Toolbox\Models
+ * @todo This should be split in a class Csv and a class CsvWriter so the 'read' functionality could be tested separately
  */
 Class Csv
 {

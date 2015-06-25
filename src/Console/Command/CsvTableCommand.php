@@ -9,15 +9,17 @@ use Toolbox\Models\Csv;
 use Exception;
 
 /**
- * Class CsvTableCommand
- *
  * This command reads in a csv and outputs the content as a table
  *
+ * Class CsvTableCommand
  * @package Toolbox\Console\Command
  */
 class CsvTableCommand extends Command
 {
 
+    /**
+     * Configure command csv:json.
+     */
     protected function configure()
     {
         $this
@@ -45,6 +47,8 @@ class CsvTableCommand extends Command
 
 
     /**
+     * Execute command csv:json.
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void

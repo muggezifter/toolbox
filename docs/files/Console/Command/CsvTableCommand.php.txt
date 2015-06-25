@@ -9,12 +9,12 @@ use Toolbox\Models\Csv;
 use Exception;
 
 /**
- * This command reads in a csv and outputs its JSON representation
+ * This command reads in a csv and outputs the content as a table
  *
- * Class CsvJsonCommand
+ * Class CsvTableCommand
  * @package Toolbox\Console\Command
  */
-class CsvJsonCommand extends Command
+class CsvTableCommand extends Command
 {
 
     /**
@@ -23,8 +23,8 @@ class CsvJsonCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('csv:json')
-            ->setDescription('Output content of csv file formatted as json')
+            ->setName('csv:table')
+            ->setDescription('Output content of csv file formatted as table')
             ->addArgument(
                 'filename',
                 InputArgument::REQUIRED,
@@ -36,12 +36,18 @@ class CsvJsonCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'Specify the character that is used to separate values in the csv file',
                 ","
+            )
+            ->addOption(
+                'headers',
+                null,
+                InputOption::VALUE_NONE,
+                'First row has headers'
             );
     }
 
 
     /**
-     * Execute command csv.json.
+     * Execute command csv:json.
      *
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -52,9 +58,10 @@ class CsvJsonCommand extends Command
         $csv = new Csv;
 
         try {
-            $csv->writeAsJson(
+            $csv->writeAsTable(
                 $input->getArgument('filename'),
                 $input->getOption('separator'),
+                $input->getOption('headers'),
                 $output
             );
         } catch (Exception $e) {

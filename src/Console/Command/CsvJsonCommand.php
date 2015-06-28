@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Toolbox\Models\Csv;
+use Toolbox\Models\CsvWriter;
 use Exception;
 
 /**
@@ -41,7 +42,7 @@ class CsvJsonCommand extends Command
 
 
     /**
-     * Execute command csv.json.
+     * Execute command csv:json.
      *
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -50,11 +51,14 @@ class CsvJsonCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $csv = new Csv;
+        $csvWriter = new CsvWriter;
 
         try {
-            $csv->writeAsJson(
-                $input->getArgument('filename'),
-                $input->getOption('separator'),
+            $csvWriter->writeAsJson(
+                $csv->read(
+                    $input->getArgument('filename'),
+                    $input->getOption('separator'),
+                    $output),
                 $output
             );
         } catch (Exception $e) {

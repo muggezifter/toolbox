@@ -34,7 +34,7 @@ class CsvTableCommandTest extends PHPUnit_Framework_TestCase
     {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test1.csv',
+            'filename'     => 'example_1.csv',
         ));
         $substring = "| aap  | noot |  |\n| mies | wim  |  |";
         $this->assertContains($substring, $this->commandTester->getDisplay());
@@ -44,7 +44,7 @@ class CsvTableCommandTest extends PHPUnit_Framework_TestCase
     {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test1.csv',
+            'filename'     => 'example_1.csv',
             '--separator'  => "p",
         ));
         $regexp = '/ERROR: file must have at least two columns/';
@@ -56,7 +56,7 @@ class CsvTableCommandTest extends PHPUnit_Framework_TestCase
     {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test2.csv',
+            'filename'     => 'example_2.csv',
             '--separator'  => "p",
         ));
         $substring = "| aap  | noot | 2 |\n| mies | wim  | 3 |";
@@ -66,7 +66,7 @@ class CsvTableCommandTest extends PHPUnit_Framework_TestCase
     public function testHeaderOptionWorksCorrectly() {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test2.csv',
+            'filename'     => 'example_2.csv',
             '--separator'  => "p",
             '--headers'    => null,
         ));

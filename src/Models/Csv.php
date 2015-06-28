@@ -40,7 +40,7 @@ Class Csv
      * @return mixed
      * @throws Exception
      */
-    private function read($filename,$separator,$output)
+    public function read($filename,$separator,$output)
     {
         if (! is_file($filename) || ! is_readable($filename)) {
             throw new Exception('no such file');
@@ -49,7 +49,7 @@ Class Csv
         $data = array_map(
             function ($value) use ($separator)
             {
-                return str_getcsv($value,$separator);
+                return str_getcsv($value,$this->separator($separator));
             },
             file($filename)
         );
@@ -79,50 +79,6 @@ Class Csv
             throw new Exception('file must have at least two columns');
         }
         return $data;
-    }
-
-
-    /**
-     * Writes the data in $filename to the console in tabular form.
-     *
-     * @param String $filename
-     * @param String $separator
-     * @param Boolean $headers
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @throws Exception
-     */
-    public function writeAsTable($filename,$separator,$headers,$output)
-    {
-        $table = new Table($output);
-
-        $data = $this->read($filename,$this->separator($separator),$output);
-
-        if ($headers) {
-            $table->setHeaders($data[0]);
-        }
-        $table->setRows(array_slice($data,$headers? 1:0));
-
-        $table->render();
-    }
-
-
-    /**
-     * Writes the data in $filename to the console as JSON.
-     *
-     * @param String $filename
-     * @param String $separator
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @throws Exception
-     */
-    public function writeAsJson($filename,$separator,$output)
-    {
-        $output->writeln(
-            json_encode(
-                $this->read(
-                    $filename,
-                    $this->separator($separator),
-                    $output
-                )));
     }
 
 }

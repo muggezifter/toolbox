@@ -34,7 +34,7 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
     {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test1.csv',
+            'filename'     => 'example_1.csv',
         ));
         $regexp = '/\[\["aap","noot",""\],\["mies","wim",""\],\["zus","jet",""\]\]/';
         $this->assertRegExp($regexp, $this->commandTester->getDisplay());
@@ -44,7 +44,7 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
     {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test1.csv',
+            'filename'     => 'example_1.csv',
             '--separator'  => "p",
         ));
         $regexp = '/ERROR: file must have at least two columns/';
@@ -55,7 +55,7 @@ class CsvJsonCommandTest extends PHPUnit_Framework_TestCase
     {
         $this->commandTester->execute(array(
             'command'      => $this->command->getName(),
-            'filename'     => 'test2.csv',
+            'filename'     => 'example_2.csv',
             '--separator'  => "p",
         ));
         $regexp = '/\[\["aap","noot","2"\],\["mies","wim","3"\],\["zus","jet","4"\]\]/';

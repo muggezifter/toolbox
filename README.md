@@ -1,4 +1,6 @@
 
+A basic console command I wrote for a job application.
+
 ``` php toolbox csv:table [--options] <filename.csv>``` print the contents of *filename.csv* to the console as a table.    
 options:   
 ``` --headers ``` first row has column headers  
